@@ -1,0 +1,35 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:1.8
+    container_name: project-influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=sensordata
+      - INFLUXDB_ADMIN_USER=NTNU
+      - INFLUXDB_ADMIN_PASSWORD=PASSWORD
+
+  grafana:
+    image: grafana/grafana:7.5.7
+    container_name: project-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=NTNU
+      - GF_SECURITY_ADMIN_PASSWORD=PASSWORD
+
+  app:
+    build:
+      context: .
+    container_name: project-app
+    depends_on:
+      - influxdb
+    devices:
+      - "/dev/i2c-1:/dev/i2c-1"
+      - "/dev/i2c-0:/dev/i2c-0"
+    environment:
+      - BLINKA_FORCEBOARD=RASPBERRY_PI_4B
+    privileged: true
+    volumes:
+      - /home/ntnu-rpi1/Grafana_project/data:/app/data
