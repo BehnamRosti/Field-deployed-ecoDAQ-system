@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "Please cite the associated ecoDAQ publication when using this software."
+title: "Field-deployed ecoDAQ system"
+type: software
+authors:
+  - family-names: Rosti
+    given-names: Behnam
+repository-code: "https://github.com/BehnamRosti/Field-deployed-ecoDAQ-system"
+license: MIT
